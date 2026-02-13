@@ -111,6 +111,11 @@ function showDashboard() {
 
   document.getElementById("welcome-text").innerText =
     "Welcome, " + currentUser.displayName;
+function logoutUser() {
+  auth.signOut().then(() => {
+    location.reload();
+  });
+}
 
 }
 
