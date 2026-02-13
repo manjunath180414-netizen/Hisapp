@@ -3,10 +3,8 @@
 <head>
   <title>HIS Academy Portal</title>
 
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -16,87 +14,47 @@
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: #ffffff;
-      color: #222;
       text-align: center;
     }
 
     .container {
       width: 90%;
-      max-width: 520px;
+      max-width: 500px;
       margin: 40px auto;
     }
 
     .card {
-      background: #ffffff;
+      background: #fff;
       padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      margin-top: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      margin-top: 20px;
       text-align: left;
-    }
-
-    h1, h2 {
-      text-align: center;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      margin-top: 14px;
-      border-radius: 10px;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 8px;
       border: 1px solid #ccc;
       font-family: 'Poppins';
-      font-size: 14px;
     }
 
     button {
       width: 100%;
       padding: 14px;
       margin-top: 20px;
-      border-radius: 10px;
+      border-radius: 8px;
       border: none;
-      background: linear-gradient(90deg, #ff512f, #dd2476);
+      background: linear-gradient(90deg,#ff512f,#dd2476);
       color: white;
       font-weight: 600;
       cursor: pointer;
-      font-size: 15px;
-      transition: 0.3s;
     }
 
-    button:hover {
-      transform: scale(1.03);
-    }
+    h2 { text-align:center; }
 
-    .price {
-      font-size: 24px;
-      font-weight: 700;
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .features {
-      margin-top: 15px;
-      line-height: 1.6;
-    }
-
-    .highlight {
-      color: #dd2476;
-      font-weight: 600;
-    }
-
-    iframe {
-      width: 100%;
-      height: 260px;
-      border-radius: 12px;
-      margin-top: 15px;
-      border: none;
-    }
-
-    .logo {
-      width: 90px;
-      display: block;
-      margin: 20px auto;
-    }
   </style>
 </head>
 
@@ -104,9 +62,7 @@
 
 <div class="container">
 
-  <img class="logo" src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepmI2kaHdJjQc05WFPfqShosWSu4Ui8a8q=w240-h480-rw">
-
-  <!-- STEP 1 -->
+  <!-- DETAILS -->
   <div id="details-section" class="card">
     <h2>Welcome to HIS Academy</h2>
     <input type="text" id="name" placeholder="Your Name">
@@ -114,46 +70,58 @@
     <button onclick="saveDetails()">Continue</button>
   </div>
 
-  <!-- STEP 2 -->
+  <!-- LOGIN -->
   <div id="login-section" class="card" style="display:none;">
-    <h2>Login to Continue</h2>
+    <h2>Login</h2>
     <button onclick="googleLogin()">Login with Google</button>
-  </div>
-
-  <!-- STEP 3 -->
-  <div id="course-section" class="card" style="display:none;">
-    <h2>🔥 SSLC 2026 CRASH COURSE 🔥</h2>
-    <p class="highlight">🚀 300 HOURS | 30 DAYS INTENSE COACHING</p>
-
-    <p><strong>🎯 Target:</strong> 90+ Marks in SSLC 2026</p>
-
-    <div class="features">
-      ✔️ All Subjects Covered<br>
-      ✔️ Live Interactive Classes<br>
-      ✔️ Recorded Classes (24/7 Access)<br>
-      ✔️ Final Exam Question Paper Analysis<br>
-      ✔️ Most Important Questions & Patterns<br>
-      ✔️ Smart Study Plan
-    </div>
-
-    <div class="price">₹189 Only</div>
-
-    <button onclick="startPayment()">Enroll Now</button>
-  </div>
-
-  <!-- STEP 4 -->
-  <div id="dashboard-section" class="card" style="display:none;">
-    <h2>Live Class</h2>
-    <p id="class-time"></p>
-    <iframe id="live-frame"></iframe>
   </div>
 
 </div>
 
-<script src="script.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyArfIujmtA2sv6M7Mjpew1I0L1oQbtjeoA",
+    authDomain: "his-academy-portal.firebaseapp.com",
+    projectId: "his-academy-portal",
+    storageBucket: "his-academy-portal.firebasestorage.app",
+    messagingSenderId: "731331595717",
+    appId: "1:731331595717:web:b755343506f885f6efcfac"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  function saveDetails() {
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+
+    if (name === "" || phone === "") {
+      alert("Please fill all fields");
+      return;
+    }
+
+    localStorage.setItem("name", name);
+    localStorage.setItem("phone", phone);
+
+    document.getElementById("details-section").style.display = "none";
+    document.getElementById("login-section").style.display = "block";
+  }
+
+  function googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then(() => {
+        alert("Login Successful");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }
+</script>
 
 </body>
 </html>
+
 
 
 
