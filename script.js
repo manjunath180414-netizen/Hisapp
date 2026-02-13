@@ -103,6 +103,15 @@ function startPayment() {
 /* ---------- DASHBOARD ---------- */
 
 function showDashboard() {
+  document.getElementById("profile-name").innerText =
+  "Name: " + currentUser.displayName;
+
+document.getElementById("profile-email").innerText =
+  "Email: " + currentUser.email;
+
+document.getElementById("profile-phone").innerText =
+  "Phone: " + localStorage.getItem("phone");
+
 
   document.getElementById("details-section").style.display="none";
   document.getElementById("login-section").style.display="none";
