@@ -81,7 +81,9 @@ function showCourse() {
 
 // PAYMENT 
 function startPayment() {
-  window.location.href = "https://rzp.io/rzp/UMz8reP";
+  window.open("https://rzp.io/rzp/UMz8reP", "_blank");
+}
+
 }
 
 }
