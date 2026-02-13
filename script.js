@@ -1,3 +1,17 @@
+
+setInterval(function(){
+  const examDate = new Date("March 18, 2025 00:00:00").getTime();
+  const now = new Date().getTime();
+  const diff = examDate - now;
+
+  if(diff > 0){
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+
+    document.getElementById("exam-countdown").innerText =
+      "SSLC Exam in " + days + " days " + hours + " hours";
+  }
+},1000);
 const firebaseConfig = {
   apiKey: "AIzaSyArfIujmtA2sv6M7Mjpew1I0L1oQbtjeoA",
   authDomain: "his-academy-portal.firebaseapp.com",
