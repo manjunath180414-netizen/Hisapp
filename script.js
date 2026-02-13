@@ -14,12 +14,12 @@ const db = firebase.firestore();
 
 let currentUser = null;
 
-// STEP 1
+// Step 1 - Save Details
 function saveDetails() {
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
 
-  if (!name || !phone) {
+  if (name === "" || phone === "") {
     alert("Please fill all fields");
     return;
   }
@@ -31,7 +31,7 @@ function saveDetails() {
   document.getElementById("login-section").style.display = "block";
 }
 
-// STEP 2
+// Step 2 - Google Login
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -39,31 +39,32 @@ function googleLogin() {
     .then((result) => {
       currentUser = result.user;
       checkUser();
+    })
+    .catch((error) => {
+      alert(error.message);
     });
 }
 
-// STEP 3
+// Check user in Firestore
 function checkUser() {
   const email = currentUser.email;
 
   db.collection("users").doc(email).get()
     .then((doc) => {
-
       if (!doc.exists) {
         createUser(email);
         showCourse();
-        return;
-      }
-
-      if (doc.data().paid === true) {
-        showDashboard();
       } else {
-        showCourse();
+        if (doc.data().paid === true) {
+          showDashboard();
+        } else {
+          showCourse();
+        }
       }
-
     });
 }
 
+// Create new user
 function createUser(email) {
   db.collection("users").doc(email).set({
     name: localStorage.getItem("name"),
@@ -73,32 +74,29 @@ function createUser(email) {
   });
 }
 
-// SHOW COURSE PAGE
+// Show Course Page
 function showCourse() {
   document.getElementById("login-section").style.display = "none";
   document.getElementById("course-section").style.display = "block";
 }
 
-// PAYMENT 
+// Payment
 function startPayment() {
   window.open("https://rzp.io/rzp/UMz8reP", "_blank");
 }
 
-}
-
-}
-
-// DASHBOARD
+// Dashboard
 function showDashboard() {
-  document.getElementById("login-section").style.display = "none";
   document.getElementById("course-section").style.display = "none";
   document.getElementById("dashboard-section").style.display = "block";
 
   db.collection("course").doc("main").get()
     .then((doc) => {
-      document.getElementById("class-time").innerText =
-        "Class Time: " + doc.data().classTime;
-      document.getElementById("live-frame").src =
-        doc.data().liveLink;
+      if (doc.exists) {
+        document.getElementById("class-time").innerText =
+          "Class Time: " + doc.data().classTime;
+        document.getElementById("live-frame").src =
+          doc.data().liveLink;
+      }
     });
 }
