@@ -12,44 +12,22 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Setup Recaptcha
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-  'recaptcha-container',
-  { size: 'normal' }
-);
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
 
-function sendOTP() {
-  const phone = document.getElementById("phone").value;
-  const phoneNumber = "+91" + phone;
-
-  auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
-    .then(function (confirmationResult) {
-      window.confirmationResult = confirmationResult;
-      alert("OTP Sent Successfully");
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const email = result.user.email;
+      checkAccess(email);
     })
-    .catch(function (error) {
+    .catch((error) => {
       alert(error.message);
     });
 }
 
-function verifyOTP() {
-  const code = document.getElementById("otp").value;
-
-  window.confirmationResult.confirm(code)
-    .then(function (result) {
-      const user = result.user;
-      const phone = user.phoneNumber.replace("+91", "");
-
-      checkAccess(phone);
-    })
-    .catch(function () {
-      alert("Invalid OTP");
-    });
-}
-
-function checkAccess(phone) {
-  db.collection("users").doc(phone).get()
-    .then(function (doc) {
+function checkAccess(email) {
+  db.collection("users").doc(email).get()
+    .then((doc) => {
       if (doc.exists && doc.data().paid === true) {
         showDashboard();
       } else {
@@ -66,6 +44,7 @@ function showDashboard() {
     "Today's Class: 6:00 PM - 7:30 PM";
 
   document.getElementById("video-frame").src =
-    "https://www.youtube.com/embed/YOUR_VIDEO_ID";
+    "https://www.youtube.com/embed/dQw4w9WgXcQ";
 }
+
 
