@@ -73,25 +73,18 @@ function createUser(email) {
   });
 }
 
-// STEP 4
+// SHOW COURSE PAGE
 function showCourse() {
   document.getElementById("login-section").style.display = "none";
   document.getElementById("course-section").style.display = "block";
-
-  db.collection("course").doc("main").get()
-    .then((doc) => {
-      document.getElementById("course-title").innerText = doc.data().title;
-      document.getElementById("course-price").innerText =
-        "Price: ₹" + doc.data().price;
-    });
 }
 
-// STEP 5 (Payment placeholder for now)
+// PAYMENT (Next we integrate Razorpay)
 function startPayment() {
-  alert("Payment integration next step");
+  alert("Next Step: Razorpay Integration");
 }
 
-// STEP 6
+// DASHBOARD
 function showDashboard() {
   document.getElementById("login-section").style.display = "none";
   document.getElementById("course-section").style.display = "none";
@@ -100,7 +93,7 @@ function showDashboard() {
   db.collection("course").doc("main").get()
     .then((doc) => {
       document.getElementById("class-time").innerText =
-        doc.data().classTime;
+        "Class Time: " + doc.data().classTime;
       document.getElementById("live-frame").src =
         doc.data().liveLink;
     });
