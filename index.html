@@ -3,145 +3,173 @@
 <head>
   <title>HIS Academy Portal</title>
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
   <style>
     body {
-      font-family: Arial;
       margin: 0;
-      background: #f4f6f9;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #001f3f, #003366);
+      color: white;
       text-align: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      margin: 40px auto;
+      animation: fadeIn 1s ease-in-out;
     }
 
     .card {
       background: white;
-      width: 90%;
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      text-align: left;
+      color: #222;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-top: 20px;
+      animation: slideUp 0.8s ease-in-out;
     }
 
-    input, button {
+    input {
       width: 100%;
       padding: 12px;
       margin-top: 12px;
       border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
+      border: 1px solid #ddd;
+      font-family: 'Poppins';
     }
 
     button {
-      background: #0066ff;
-      color: white;
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border-radius: 10px;
       border: none;
+      background: linear-gradient(45deg, #ff512f, #dd2476);
+      color: white;
+      font-weight: 600;
       cursor: pointer;
-      font-weight: bold;
+      transition: 0.3s;
+      font-family: 'Poppins';
+      font-size: 15px;
     }
 
-    h2, h3 {
-      text-align: center;
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-weight: 800;
+      margin-bottom: 10px;
     }
 
     .highlight {
-      color: #e60000;
-      font-weight: bold;
+      color: #dd2476;
+      font-weight: 600;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 15px;
     }
 
     iframe {
       width: 100%;
       height: 260px;
       border-radius: 12px;
-      margin-top: 10px;
+      margin-top: 15px;
+    }
+
+    img.logo {
+      width: 90px;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0;}
+      to {opacity:1;}
+    }
+
+    @keyframes slideUp {
+      from {transform: translateY(40px); opacity:0;}
+      to {transform: translateY(0); opacity:1;}
     }
   </style>
 </head>
 
 <body>
 
-<!-- STEP 1: DETAILS -->
-<div id="details-section" class="card">
-  <h2>HIS Academy</h2>
-  <input type="text" id="name" placeholder="Your Name">
-  <input type="text" id="phone" placeholder="Phone Number">
-  <button onclick="saveDetails()">Continue</button>
-</div>
+<div class="container">
 
-<!-- STEP 2: LOGIN -->
-<div id="login-section" class="card" style="display:none;">
-  <h3>Login to Continue</h3>
-  <button onclick="googleLogin()">Login with Google</button>
-</div>
+  <img class="logo" src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepmI2kaHdJjQc05WFPfqShosWSu4Ui8a8q=w240-h480-rw">
 
-<!-- STEP 3: COURSE DETAILS PAGE -->
-<!-- STEP 3: COURSE DETAILS PAGE -->
-<div id="course-section" style="display:none; padding:20px; max-width:600px; margin:30px auto; font-family:Arial;">
+  <!-- DETAILS -->
+  <div id="details-section" class="card">
+    <h1>Welcome to HIS Academy</h1>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="text" id="phone" placeholder="Phone Number">
+    <button onclick="saveDetails()">Continue</button>
+  </div>
 
-  <div style="background:white; padding:25px; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
+  <!-- LOGIN -->
+  <div id="login-section" class="card" style="display:none;">
+    <h2>Login to Continue</h2>
+    <button onclick="googleLogin()">Login with Google</button>
+  </div>
 
-    <h1 style="text-align:center; margin-bottom:10px;">
-      🔥 SSLC 2026 CRASH COURSE 🔥
-    </h1>
+  <!-- COURSE PAGE -->
+  <div id="course-section" class="card" style="display:none; text-align:left;">
 
-    <p style="text-align:center; font-weight:bold; color:#e60000;">
-      🚀 300 HOURS | 30 DAYS INTENSE COACHING
+    <h1>🔥 SSLC 2026 CRASH COURSE 🔥</h1>
+    <p class="highlight">🚀 300 HOURS | 30 DAYS INTENSE COACHING</p>
+
+    <p><strong>🎯 Target:</strong> 90+ Marks in SSLC 2026</p>
+
+    <p>
+      This is not a normal tuition.  
+      This is a specialised, result-oriented crash program designed for serious students only.
     </p>
 
-    <div style="background:#fff4e6; padding:10px; border-radius:10px; margin:15px 0; text-align:center; font-weight:bold;">
-      🎯 Target: 90+ Marks in SSLC 2026
-    </div>
+    <h3>✅ What You’ll Get:</h3>
 
-    <p style="margin-top:15px;">
-      This is not a normal tuition.
-      This is a <b>specialised, result-oriented crash program</b> designed for serious students only.
+    <p>✔️ All Subjects Covered</p>
+    <p>✔️ Live Interactive Classes</p>
+    <p>✔️ Recorded Classes (24/7 Access)</p>
+    <p>✔️ Final Exam Question Paper Analysis</p>
+    <p>✔️ Most Important Questions & Patterns</p>
+    <p>✔️ Smart Study Plan to Score Maximum Marks</p>
+
+    <p class="highlight">
+      💥 30 Days. 300 Hours. One Goal – SSLC SUCCESS.
     </p>
 
-    <h3 style="margin-top:20px;">✅ What You’ll Get:</h3>
+    <div class="price">Course Fee: ₹189</div>
 
-    <div style="display:grid; gap:10px; margin-top:10px;">
+    <button onclick="startPayment()">Enroll Now</button>
 
-      <div style="background:#f7f9fc; padding:12px; border-radius:10px;">✔️ All Subjects Covered</div>
-      <div style="background:#f7f9fc; padding:12px; border-radius:10px;">✔️ Live Interactive Classes</div>
-      <div style="background:#f7f9fc; padding:12px; border-radius:10px;">✔️ Recorded Classes (24/7 Access)</div>
-      <div style="background:#f7f9fc; padding:12px; border-radius:10px;">✔️ Final Exam Question Paper Analysis</div>
-      <div style="background:#f7f9fc; padding:12px; border-radius:10px;">✔️ Most Important Questions & Patterns</div>
-      <div style="background:#f7f9fc; padding:12px; border-radius:10px;">✔️ Smart Study Plan for Maximum Marks</div>
+  </div>
 
-    </div>
-
-    <div style="background:#e6f2ff; padding:12px; border-radius:12px; margin-top:20px; text-align:center;">
-      📚 From basics to exam strategy – everything in ONE program  
-      <br><br>
-      ⏳ Limited time. Maximum impact.
-    </div>
-
-    <div style="text-align:center; margin-top:25px;">
-      <h2 style="margin:5px 0;">Course Fee: ₹189</h2>
-      <p style="color:#666;">One-time payment | Full Access</p>
-    </div>
-
-    <button onclick="startPayment()" 
-      style="margin-top:15px; width:100%; padding:15px; font-size:16px; background:#0066ff; color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">
-      🚀 Enroll Now
-    </button>
-
+  <!-- DASHBOARD -->
+  <div id="dashboard-section" class="card" style="display:none;">
+    <h2>Live Class</h2>
+    <p id="class-time"></p>
+    <iframe id="live-frame"></iframe>
   </div>
 
 </div>
 
-
-<!-- STEP 4: DASHBOARD -->
-<div id="dashboard-section" class="card" style="display:none;">
-  <h3>Welcome to Live Class</h3>
-  <p id="class-time"></p>
-  <iframe id="live-frame"></iframe>
-</div>
-
 <script src="script.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 </body>
 </html>
+
