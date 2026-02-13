@@ -4,7 +4,7 @@ const firebaseConfig = {
   projectId: "his-academy-portal",
   storageBucket: "his-academy-portal.firebasestorage.app",
   messagingSenderId: "731331595717",
-  appId: "1:731331595717:web:b755343506f885f6efcfac"
+  appId: "1:731331595717:web:b755343506f885f6efcfac" 
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -98,4 +98,7 @@ async function showDashboard() {
 
 function startPayment() {
   window.open("https://rzp.io/rzp/UMz8reP","_blank");
+}
+function forceDashboard() {
+  showDashboard();
 }
