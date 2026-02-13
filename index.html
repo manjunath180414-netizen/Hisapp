@@ -1,35 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HIS Academy Student Portal</title>
+  <title>HIS Academy Portal</title>
 
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
   <style>
-    body { font-family: Arial; text-align:center; background:#f4f6f9; }
-    .card { background:white; width:320px; margin:50px auto; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
-    button { width:100%; padding:12px; background:#0066ff; color:white; border:none; border-radius:8px; cursor:pointer; }
+    body { font-family: Arial; text-align:center; background:#f5f5f5; margin:0; }
+    .card { background:white; width:350px; margin:40px auto; padding:20px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    input, button { width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ccc; }
+    button { background:#0066ff; color:white; border:none; cursor:pointer; }
     iframe { margin-top:10px; border-radius:10px; }
   </style>
 </head>
 
 <body>
 
-<div id="login-section" class="card">
-  <h3>HIS Academy</h3>
+<!-- STEP 1: DETAILS -->
+<div id="details-section" class="card">
+  <h3>Enter Details</h3>
+  <input type="text" id="name" placeholder="Your Name">
+  <input type="text" id="phone" placeholder="Phone Number">
+  <button onclick="saveDetails()">Continue</button>
+</div>
+
+<!-- STEP 2: GOOGLE LOGIN -->
+<div id="login-section" class="card" style="display:none;">
+  <h3>Login</h3>
   <button onclick="googleLogin()">Login with Google</button>
 </div>
 
-<div id="dashboard" class="card" style="display:none;">
-  <h3>Welcome</h3>
+<!-- STEP 3: COURSE PAGE -->
+<div id="course-section" class="card" style="display:none;">
+  <h3 id="course-title"></h3>
+  <p id="course-price"></p>
+  <button onclick="startPayment()">Pay Now</button>
+</div>
+
+<!-- STEP 4: DASHBOARD -->
+<div id="dashboard-section" class="card" style="display:none;">
+  <h3>Welcome to Class</h3>
   <p id="class-time"></p>
-  <iframe id="video-frame" width="100%" height="250"></iframe>
+  <iframe id="live-frame" width="100%" height="250"></iframe>
 </div>
 
 <script src="script.js"></script>
 
 </body>
 </html>
-
