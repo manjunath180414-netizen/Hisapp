@@ -79,9 +79,11 @@ function showCourse() {
   document.getElementById("course-section").style.display = "block";
 }
 
-// PAYMENT (Next we integrate Razorpay)
+// PAYMENT 
 function startPayment() {
-  alert("Next Step: Razorpay Integration");
+  window.location.href = "https://rzp.io/rzp/UMz8reP";
+}
+
 }
 
 // DASHBOARD
