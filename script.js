@@ -100,8 +100,17 @@ function startPayment() {
   window.open("https://rzp.io/rzp/UMz8reP","_blank");
 }
 
-/* ---------- ADMIN TEST ---------- */
+/* ---------- DASHBOARD ---------- */
 
-function forceDashboard() {
-  showDashboard();
+function showDashboard() {
+
+  document.getElementById("details-section").style.display="none";
+  document.getElementById("login-section").style.display="none";
+  document.getElementById("course-section").style.display="none";
+  document.getElementById("dashboard-section").style.display="block";
+
+  document.getElementById("welcome-text").innerText =
+    "Welcome, " + currentUser.displayName;
+
 }
+
