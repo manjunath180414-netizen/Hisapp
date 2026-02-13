@@ -134,11 +134,21 @@
   </div>
 
   <!-- DASHBOARD -->
-  <div id="dashboard-section" class="card" style="display:none;">
-    <h2>Live Class</h2>
-    <p id="class-time"></p>
-    <iframe id="live-frame"></iframe>
-  </div>
+  <div id="dashboard-section" class="card" style="display:none; text-align:center;">
+
+  <h2 id="welcome-text"></h2>
+
+  <p>Today's Class Time:</p>
+  <p id="class-time">6:00 PM - 7:30 PM</p>
+
+  <iframe id="live-frame"></iframe>
+
+  <button onclick="logoutUser()" style="background:#333; margin-top:20px;">
+    Logout
+  </button>
+
+</div>
+
 
 </div>
 
