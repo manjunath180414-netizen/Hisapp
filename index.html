@@ -8,11 +8,56 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
   <style>
-    body { font-family: Arial; text-align:center; background:#f5f5f5; margin:0; }
-    .card { background:white; width:350px; margin:40px auto; padding:20px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
-    input, button { width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ccc; }
-    button { background:#0066ff; color:white; border:none; cursor:pointer; }
-    iframe { margin-top:10px; border-radius:10px; }
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f4f6f9;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background: #0066ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    h2, h3 {
+      text-align: center;
+    }
+
+    .highlight {
+      color: #e60000;
+      font-weight: bold;
+    }
+
+    iframe {
+      width: 100%;
+      height: 260px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -20,61 +65,60 @@
 
 <!-- STEP 1: DETAILS -->
 <div id="details-section" class="card">
-  <h3>Enter Details</h3>
+  <h2>HIS Academy</h2>
   <input type="text" id="name" placeholder="Your Name">
   <input type="text" id="phone" placeholder="Phone Number">
   <button onclick="saveDetails()">Continue</button>
 </div>
 
-<!-- STEP 2: GOOGLE LOGIN -->
+<!-- STEP 2: LOGIN -->
 <div id="login-section" class="card" style="display:none;">
-  <h3>Login</h3>
+  <h3>Login to Continue</h3>
   <button onclick="googleLogin()">Login with Google</button>
 </div>
 
-<!-- STEP 3: COURSE PAGE -->
-<div id="course-section" class="card" style="display:none; text-align:left;">
+<!-- STEP 3: COURSE DETAILS PAGE -->
+<div id="course-section" class="card" style="display:none;">
 
-  <h2 style="text-align:center;">🔥 SSLC 2026 CRASH COURSE 🔥</h2>
-  <p style="text-align:center;"><strong>🚀 300 HOURS | 30 DAYS INTENSE COACHING</strong></p>
+  <h2>🔥 SSLC 2026 CRASH COURSE 🔥</h2>
+  <p class="highlight">🚀 300 HOURS | 30 DAYS INTENSE COACHING</p>
 
-  <p><strong>🎯 Target: 90+ Marks in SSLC 2026</strong></p>
+  <p><strong>🎯 Target:</strong> 90+ Marks in SSLC 2026</p>
 
   <p>
-    This is not a normal tuition.
+    This is not a normal tuition.  
     This is a specialised, result-oriented crash program designed for serious students only.
   </p>
 
-  <h4>✅ What You’ll Get:</h4>
+  <h3>✅ What You’ll Get:</h3>
 
-  <ul>
-    <li>✔️ All Subjects Covered</li>
-    <li>✔️ Live Interactive Classes</li>
-    <li>✔️ Recorded Classes (24/7 Access)</li>
-    <li>✔️ Final Exam Question Paper Analysis</li>
-    <li>✔️ Most Important Questions & Patterns</li>
-    <li>✔️ Smart Study Plan to Score Maximum Marks</li>
-  </ul>
+  <p>✔️ All Subjects Covered</p>
+  <p>✔️ Live Interactive Classes</p>
+  <p>✔️ Recorded Classes (24/7 Access)</p>
+  <p>✔️ Final Exam Question Paper Analysis</p>
+  <p>✔️ Most Important Questions & Patterns</p>
+  <p>✔️ Smart Study Plan to Score Maximum Marks</p>
 
   <p>
     📚 From basics to exam strategy – everything in ONE program  
     ⏳ Limited time. Maximum impact.
   </p>
 
-  <p><strong>💥 30 Days. 300 Hours. One Goal – SSLC SUCCESS.</strong></p>
+  <p class="highlight">
+    💥 30 Days. 300 Hours. One Goal – SSLC SUCCESS.
+  </p>
 
-  <h3 style="text-align:center;">💰 Course Fee: ₹189</h3>
+  <h3 style="text-align:center;">Course Fee: ₹189</h3>
 
   <button onclick="startPayment()">Pay Now</button>
 
 </div>
 
-
 <!-- STEP 4: DASHBOARD -->
 <div id="dashboard-section" class="card" style="display:none;">
-  <h3>Welcome to Class</h3>
+  <h3>Welcome to Live Class</h3>
   <p id="class-time"></p>
-  <iframe id="live-frame" width="100%" height="250"></iframe>
+  <iframe id="live-frame"></iframe>
 </div>
 
 <script src="script.js"></script>
