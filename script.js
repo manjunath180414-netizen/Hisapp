@@ -103,6 +103,7 @@ function startPayment() {
 /* ---------- DASHBOARD ---------- */
 
 function showDashboard() {
+  loadEcodedVideo();
   document.getElementById("profile-name").innerText =
   "Name: " + currentUser.displayName;
 
@@ -126,5 +127,20 @@ function logoutUser() {
   });
 }
 
+}
+async function loadRecordedVideos() {
+  const snapshot = await db.collection("videos").get();
+  let html = "";
+
+  snapshot.forEach(doc => {
+    html += `
+      <div style="margin-top:10px;">
+        <p>${doc.data().title}</p>
+        <iframe src="${doc.data().link}"></iframe>
+      </div>
+    `;
+  });
+
+  document.getElementById("video-list").innerHTML = html;
 }
 
