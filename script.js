@@ -158,3 +158,10 @@ async function loadRecordedVideos() {
   document.getElementById("video-list").innerHTML = html;
 }
 
+async function loadDailyMessage(){
+  const doc = await db.collection("adminContent").doc("main").get();
+  if(doc.exists){
+    document.getElementById("daily-message").innerText =
+      doc.data().dailyMessage;
+  }
+}
