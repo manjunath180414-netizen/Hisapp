@@ -165,3 +165,21 @@ async function loadDailyMessage(){
       doc.data().dailyMessage;
   }
 }
+async function loadMotivationImages(){
+  const snapshot = await db.collection("motivations").get();
+  const images = [];
+
+  snapshot.forEach(doc => {
+    images.push(doc.data().imageUrl);
+  });
+
+  let index = 0;
+
+  setInterval(function(){
+    if(images.length > 0){
+      document.getElementById("motivation-img").src =
+        images[index];
+      index = (index + 1) % images.length;
+    }
+  },3000);
+}
