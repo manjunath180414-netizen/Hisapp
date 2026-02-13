@@ -12,39 +12,96 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+let currentUser = null;
+
+// STEP 1
+function saveDetails() {
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+
+  if (!name || !phone) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  localStorage.setItem("name", name);
+  localStorage.setItem("phone", phone);
+
+  document.getElementById("details-section").style.display = "none";
+  document.getElementById("login-section").style.display = "block";
+}
+
+// STEP 2
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
 
   auth.signInWithPopup(provider)
     .then((result) => {
-      const email = result.user.email;
-      checkAccess(email);
-    })
-    .catch((error) => {
-      alert(error.message);
+      currentUser = result.user;
+      checkUser();
     });
 }
 
-function checkAccess(email) {
+// STEP 3
+function checkUser() {
+  const email = currentUser.email;
+
   db.collection("users").doc(email).get()
     .then((doc) => {
-      if (doc.exists && doc.data().paid === true) {
+
+      if (!doc.exists) {
+        createUser(email);
+        showCourse();
+        return;
+      }
+
+      if (doc.data().paid === true) {
         showDashboard();
       } else {
-        alert("Access Denied. Please Purchase Course.");
+        showCourse();
       }
+
     });
 }
 
-function showDashboard() {
-  document.getElementById("login-section").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-
-  document.getElementById("class-time").innerText =
-    "Today's Class: 6:00 PM - 7:30 PM";
-
-  document.getElementById("video-frame").src =
-    "https://www.youtube.com/embed/dQw4w9WgXcQ";
+function createUser(email) {
+  db.collection("users").doc(email).set({
+    name: localStorage.getItem("name"),
+    phone: localStorage.getItem("phone"),
+    paid: false,
+    joinedAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
 }
 
+// STEP 4
+function showCourse() {
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("course-section").style.display = "block";
 
+  db.collection("course").doc("main").get()
+    .then((doc) => {
+      document.getElementById("course-title").innerText = doc.data().title;
+      document.getElementById("course-price").innerText =
+        "Price: ₹" + doc.data().price;
+    });
+}
+
+// STEP 5 (Payment placeholder for now)
+function startPayment() {
+  alert("Payment integration next step");
+}
+
+// STEP 6
+function showDashboard() {
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("course-section").style.display = "none";
+  document.getElementById("dashboard-section").style.display = "block";
+
+  db.collection("course").doc("main").get()
+    .then((doc) => {
+      document.getElementById("class-time").innerText =
+        doc.data().classTime;
+      document.getElementById("live-frame").src =
+        doc.data().liveLink;
+    });
+}
